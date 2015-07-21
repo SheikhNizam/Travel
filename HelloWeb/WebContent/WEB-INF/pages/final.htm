@@ -1,0 +1,98 @@
+<html data-ng-app="finalApp">
+<head>
+<title>AngularJS First Application</title>
+
+</head>
+<body>
+		<h1>Sample Application</h1>
+		<!-- <div>
+		   <p>Enter your Name: <input type="text" ng-model="name"></p>
+		   <p>Hello {{name}} <span ng-bind="name"></span>!</p>
+		</div> -->
+		
+		
+		<!-- <div ng-view=></div> -->
+		<div data-ng-controller="simpleController">
+		
+		<div>
+			<table><tr><td>
+				<select data-ng-model="status" data-ng-options="status.name for status in MailStatus" data-ng-change="getMailsAsPerStatus()">
+				<option value="">Please select a status</option>
+				</select>
+			</td></tr></table>
+		</div>
+		<br>
+		
+		
+		<br>
+		<table  border="1">
+			<tr>
+				<th>Mail-Id</th>
+				<th>Mail-Template-Name</th>
+				<th>Status</th>
+				<th>Operation</th>
+			</tr>
+			<tr data-ng-model="tempMail" data-ng-repeat="tempMail in Mails">
+				<td>{{tempMail.mailId}}</td>
+				<td>{{tempMail.mailTemplateName}}</td>
+				<td>{{tempMail.status}}</td>
+				<td>
+					<table><tr><td>
+					<!-- form action="html/page.html" method="post"-->
+						<a href="WebContent/WEB-INF/html/page.html"><img src="images/edit.jpg" style="height:20px;width:20px;"></a> 
+						<!-- input type="image" id="edit" style="height:20px;width:20px;" src="images/edit.jpg"/>
+					</form-->
+					</td>
+					
+					<td>
+					<a href="WebContent/WEB-INF/HelloPage.html"><img src="images/add.jpg" style="height:20px;width:20px;"></a> 
+					<!-- <form action="HelloPage.html" method="post">
+						<input type="image" id="add" style="height:20px;width:20px;" src="images/add.jpg"/>
+					</form> -->
+					</td></tr></table>
+				</td>
+			</tr>
+		</table>
+		
+		
+		<br>
+		<br>
+		<div>
+			<form data-ng-submit="addMails()">
+		      <input type="text" data-ng-model="mail.mailId">
+		      <input type="text" data-ng-model="mail.mailTemplateName">
+		      <select data-ng-model="mail.status">
+				<option data-ng-repeat="status in MailStatus">{{status.name}}</option>
+				</select>
+		      <input type="submit" value="add">
+    		</form>
+		</div>
+			
+		</div>
+		
+	<script>
+	var demoApp=angular.module('demoApp',[]);
+	
+		demoApp.controller('simpleController',function ($scope){
+			$scope.Mails=[
+			  				{mailId:'CON0001',mailTemplateName:'Booking',status:'Active'},
+			  				{mailId:'CON0002',mailTemplateName:'Booking',status:'Active'},
+			  				{mailId:'CXL0002',mailTemplateName:'Cancel',status:'Ready'}
+			  			];
+			$scope.MailStatus=[
+				                   {name:'Active'},
+				                   {name:'Ready'},
+				                   {name:'Inactive'}
+			                   ];
+						$scope.addMails = function() {
+					          $scope.Mails.push(
+					        		  {
+					        			  mailId: $scope.mail.mailId,
+					        			  mailTemplateName: $scope.mail.mailTemplateName,
+					        			  status: $scope.mail.status,
+					        		  })
+					        };
+				});
+	</script>
+</body>
+</html>
